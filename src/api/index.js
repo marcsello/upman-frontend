@@ -127,11 +127,19 @@ export default new class {
     }
 
     createReporter(data) {
-        return this._performApiCall("post", "/reporter", data, 201)
+        return this._performApiCall("post", "/reporter", data, 201, null, {
+            409: "Key or name already in use",
+            422: "Invalid data provided",
+            ...COMMON_ERROR_CODES
+        })
     }
 
     patchReporter(id, data) {
-        return this._performApiCall("patch", "/reporter/" + id, data)
+        return this._performApiCall("patch", "/reporter/" + id, data, 200, null, {
+            409: "Key or name already in use",
+            422: "Invalid data provided",
+            ...COMMON_ERROR_CODES
+        })
     }
 
     deleteReporter(id) {

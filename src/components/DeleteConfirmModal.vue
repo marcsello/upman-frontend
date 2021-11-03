@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="modal-model-info" v-model="showModal" @ok="emitConfirmed" @show="updateInfo" @close="onClose" title="Confirmation">
+  <b-modal id="modal-confirm-delete" v-model="showModal" @ok="emitConfirmed" @show="updateInfo" @close="onClose" title="Confirmation">
     <p>
       Are you sure you want to <b>delete</b> the following reporter?
     </p>
@@ -40,7 +40,7 @@ export default {
       this.reporter = this.$store.getters.getReporterById(this.id)
     },
     onClose() {
-      this.show = false
+      this.showModal = false
     }
   },
   computed: {

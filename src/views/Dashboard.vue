@@ -59,6 +59,7 @@
 import CreateUpdateReporterModal from "@/components/CreateUpdateReporterModal";
 import DeleteConfirmModal from "@/components/DeleteConfirmModal";
 import InfoModal from "@/components/InfoModal";
+import moment from 'moment';
 
 export default {
   name: 'Dashboard',
@@ -86,10 +87,21 @@ export default {
           key: "name",
           sortable: true
         },
-        "created",
+        {
+          key: "created",
+          formatter(value) {
+            return moment(value).format('YYYY. MM. DD. h:mm:ss')
+          }
+        },
         {
           key: "last_seen",
-          sortable: true
+          sortable: true,
+          formatter(value) {
+            if (!value) {
+              return 'Never'
+            }
+            return moment(value).format('YYYY. MM. DD. h:mm:ss')
+          }
         },
         {
           key: "info_digest",
@@ -105,7 +117,8 @@ export default {
           }
         },
         "actions"
-      ]
+      ],
+      intervalId: null
     }
   },
   methods: {
@@ -152,7 +165,16 @@ export default {
         id: id,
         show: true
       }
+    },
+    updateTimers() {
+
     }
+  },
+  mounted() {
+    this.intervalId = setInterval(() => this.updateTimers(), 500)
+  },
+  destroyed() {
+    clearInterval(this.intervalId)
   }
 }
 </script>
