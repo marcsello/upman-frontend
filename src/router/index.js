@@ -46,6 +46,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
+  if (!store.state.appReady) {
+    // TODO: Whyyyy can't I figure out a better solution to this? :'(
+    next();
+    return;
+  }
+
   if (store.state.loggedIn) { // loggedin
     if (to.matched.some(record => record.meta.acl === "logout")) {
       // trying to navigate to a unregistered only endpoint

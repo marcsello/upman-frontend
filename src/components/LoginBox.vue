@@ -2,7 +2,6 @@
   <b-overlay :show="pending" rounded="sm">
     <b-card
         title="Login"
-        tag="login"
         :border-variant="loginFail? 'danger' : ''"
     >
       <b-form @submit.prevent="performLogin" @input="formChanged" class="my-3">

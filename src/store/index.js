@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         loggedIn: false,
-        reporters: []
+        reporters: [],
+        appReady: false
     },
     mutations: {
         changeLoggedIn(state, loggedIn) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
         },
         updateReporters(state, reporters) {
             state.reporters = reporters
+        },
+        setAppReady(state) {
+            state.appReady = true
         }
     },
     actions: {
@@ -25,6 +29,9 @@ export default new Vuex.Store({
         },
         updateReporters({commit}, reporters) {
             commit('updateReporters', reporters)
+        },
+        setAppReady({commit}) {
+            commit('setAppReady')
         }
     }
 })

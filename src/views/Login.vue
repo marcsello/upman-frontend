@@ -1,6 +1,6 @@
 <template>
   <b-row class="justify-content-md-center">
-    <b-col sm="12" md="6" xl="4">
+    <b-col sm="12" md="6" xl="4" class="py-4">
       <login-box/>
     </b-col>
   </b-row>
