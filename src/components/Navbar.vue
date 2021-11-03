@@ -6,7 +6,7 @@
         <b>Upman</b>
       </b-navbar-brand>
 
-      <b-navbar-nav class="ms-auto px-2">
+      <b-navbar-nav class="ml-auto px-2">
         <b-button variant="outline-danger" @click="performLogout" v-if="$store.state.loggedIn">Logout</b-button>
         <b-button variant="outline-success" :to="{name: 'Login'}" v-else>Login</b-button>
       </b-navbar-nav>

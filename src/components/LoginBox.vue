@@ -47,9 +47,26 @@ export default {
   methods: {
     performLogin() {
       this.pending = true;
+      this.$api.tryAndSetApiKey(this.form.key).then((reporters) => {
+
+        this.$showToast("Login successful", "success", false)
+
+        const updateReporters = this.$store.dispatch('updateReporters', reporters)
+        const setLoggedIn = this.$store.dispatch('setLoggedIn')
+
+        Promise.all([updateReporters, setLoggedIn]).then(() => {
+          this.$router.push({name: "Dashboard"})
+        })
+
+      }).catch(({text}) => {
+        this.$showToast(text)
+        this.loginFail = true
+        this.pending = false
+      })
     },
+
     formChanged() {
-      this.loginFail = false;
+      this.loginFail = false
     }
   }
 }

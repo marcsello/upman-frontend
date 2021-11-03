@@ -33,11 +33,11 @@ export default new class {
         return !!sessionStorage.getItem(LOCAL_STORAGE_KEY)
     }
 
-    _performApiCall(method, url, data = null, expectedStatus = 200, errorTexts = COMMON_ERROR_CODES) {
+    _performApiCall(method, url, data = null, expectedStatus = 200, keyOverride = null, errorTexts = COMMON_ERROR_CODES) {
 
         return new Promise((resolve, reject) => {
 
-            if (!this.haveApiKey) {
+            if (!this.haveApiKey && !keyOverride) {
                 return reject({
                     status: null,
                     text: "API key not set",
@@ -45,9 +45,15 @@ export default new class {
                 })
             }
 
-            this.http.request({
+            let config = {
                 method, url, data
-            }).then((response) => {
+            }
+
+            if (keyOverride) {
+                config.headers = {'Authorization': `Key ${keyOverride}`}
+            }
+
+            this.http.request(config).then((response) => {
 
                 if (response.status === expectedStatus) {
                     return resolve(response.data)
@@ -92,9 +98,18 @@ export default new class {
 
     }
 
-    setApiKey(key) {
-        sessionStorage.setItem(LOCAL_STORAGE_KEY, key)
-        this._setupHTTPObject()
+    tryAndSetApiKey(key) { // "login"
+
+        return new Promise((resolve, reject) => {
+
+            this._performApiCall("get", "/reporter", null, 200, key).then((data) => {
+                sessionStorage.setItem(LOCAL_STORAGE_KEY, key)
+                this._setupHTTPObject()
+                resolve(data)
+            }).catch(reject)
+
+        })
+
     }
 
     unsetApiKey() {
