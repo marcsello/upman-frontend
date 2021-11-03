@@ -1,10 +1,15 @@
 <template>
   <div id="navbar">
-    <b-navbar toggleable="sm" type="light" variant="light" fixed="top">
+    <b-navbar type="light" variant="light" fixed="top">
 
-      <b-navbar-brand class="mx-2">
+      <b-navbar-brand class="px-2">
         <b>Upman</b>
       </b-navbar-brand>
+
+      <b-navbar-nav class="ms-auto px-2">
+        <b-button variant="outline-danger" @click="performLogout" v-if="$store.state.loggedIn">Logout</b-button>
+        <b-button variant="outline-success" :to="{name: 'Login'}" v-else>Login</b-button>
+      </b-navbar-nav>
 
     </b-navbar>
   </div>
@@ -12,7 +17,13 @@
 
 <script>
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  methods: {
+    performLogout() {
+      this.$api.unsetApiKey()
+      this.$store.dispatch("unsetLoggedIn").then(() => this.$router.push({name: 'Login'})).catch()
+    }
+  }
 }
 </script>
 

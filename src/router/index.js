@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Dashboard.vue'
 import Login from '../views/Login.vue'
 
-import api from '@/api'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -46,7 +46,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
-  if (api.haveApiKey) { // loggedin
+  if (store.state.loggedIn) { // loggedin
     if (to.matched.some(record => record.meta.acl === "logout")) {
       // trying to navigate to a unregistered only endpoint
       next({name: 'Dashboard'})

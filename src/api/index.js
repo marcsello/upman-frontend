@@ -12,11 +12,11 @@ const COMMON_ERROR_CODES = {
 export default new class {
 
     _setupHTTPObject() {
-        const token = sessionStorage.getItem(LOCAL_STORAGE_KEY)
+        const key = sessionStorage.getItem(LOCAL_STORAGE_KEY)
 
         let headers = {}
-        if (token) {
-            headers = {'Authorization': `Key ${token}`}
+        if (key) {
+            headers = {'Authorization': `Key ${key}`}
         }
 
         this.http = axios.create({
@@ -94,6 +94,11 @@ export default new class {
 
     setApiKey(key) {
         sessionStorage.setItem(LOCAL_STORAGE_KEY, key)
+        this._setupHTTPObject()
+    }
+
+    unsetApiKey() {
+        sessionStorage.removeItem(LOCAL_STORAGE_KEY)
         this._setupHTTPObject()
     }
 

@@ -1,10 +1,19 @@
 <template>
-  <div></div>
+  <b-row class="justify-content-md-center">
+    <b-col sm="12" md="6" xl="4">
+      <login-box/>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
+import LoginBox from "@/components/LoginBox";
+
 export default {
-  name: "Login"
+  name: "Login",
+  components: {
+    LoginBox
+  }
 }
 </script>
 
