@@ -7,6 +7,7 @@ export default new Vuex.Store({
     state: {
         loggedIn: false,
         reporters: [],
+        reporters_loading: true,
         appReady: false
     },
     mutations: {
@@ -15,9 +16,13 @@ export default new Vuex.Store({
         },
         updateReporters(state, reporters) {
             state.reporters = reporters
+            state.reporters_loading = false
         },
         setAppReady(state) {
             state.appReady = true
+        },
+        setReportersLoading(state) {
+            state.reporters_loading = true
         }
     },
     actions: {
@@ -32,6 +37,14 @@ export default new Vuex.Store({
         },
         setAppReady({commit}) {
             commit('setAppReady')
+        },
+        setReportersLoading({commit}) {
+            commit('setReportersLoading')
+        }
+    },
+    getters: {
+        getReporterById: (state) => (id) => {
+            return state.reporters.find(reporters => reporters.id === id)
         }
     }
 })

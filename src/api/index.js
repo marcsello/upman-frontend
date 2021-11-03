@@ -4,6 +4,7 @@ const API_BASE_URL = process.env.VUE_APP_API_LOCATION
 const LOCAL_STORAGE_KEY = "API_KEY"
 
 const COMMON_ERROR_CODES = {
+    404: "Not found",
     403: "Access Denied",
     401: "Authorization unsuccessful",
     400: "Bad request"
@@ -134,6 +135,6 @@ export default new class {
     }
 
     deleteReporter(id) {
-        return this._performApiCall("delete", "/reporter/" + id)
+        return this._performApiCall("delete", "/reporter/" + id, null, 204)
     }
 }
