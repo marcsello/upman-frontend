@@ -61,6 +61,8 @@ import DeleteConfirmModal from "@/components/DeleteConfirmModal";
 import InfoModal from "@/components/InfoModal";
 import moment from 'moment';
 
+import countdown from 'countdown'
+
 export default {
   name: 'Dashboard',
   components: {
@@ -100,8 +102,9 @@ export default {
             if (!value) {
               return 'Never'
             }
-            return moment(value).format('YYYY. MM. DD. h:mm:ss')
-          }
+            return countdown(new Date(value),null,countdown.WEEKS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS).toString() + " ago"
+          },
+
         },
         {
           key: "info_digest",
@@ -117,8 +120,7 @@ export default {
           }
         },
         "actions"
-      ],
-      intervalId: null
+      ]
     }
   },
   methods: {
@@ -165,16 +167,7 @@ export default {
         id: id,
         show: true
       }
-    },
-    updateTimers() {
-
     }
-  },
-  mounted() {
-    this.intervalId = setInterval(() => this.updateTimers(), 500)
-  },
-  destroyed() {
-    clearInterval(this.intervalId)
   }
 }
 </script>

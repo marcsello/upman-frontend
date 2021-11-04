@@ -40,13 +40,16 @@ export default {
         {
           key: "created",
           formatter(value) {
-            return moment(value).format('YYYY. MM. DD. h:mm:ss') + " (" + moment(value).fromNow() + ")"
+            return moment(value).format('YYYY. MM. DD. h:mm:ss') + " (about " + moment(value).fromNow() + ")"
           }
         },
         {
           key: "last_seen",
           formatter(value) {
-            return moment(value).format('YYYY. MM. DD. h:mm:ss') + " (" + moment(value).fromNow() + ")"
+            if (!value) {
+              return "Never"
+            }
+            return moment(value).format('YYYY. MM. DD. h:mm:ss') + " (about " + moment(value).fromNow() + ")"
           }
         },
         {key: "info_digest"}
